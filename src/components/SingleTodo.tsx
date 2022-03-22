@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import DoneIcon from "@mui/icons-material/Done";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
@@ -42,7 +42,13 @@ export const SingleTodo: React.FC<Props> = ({ todo, todos, setTodos }) => {
     setTodos(
       todos.map((todo) => (todo.id === id ? { ...todo, todo: editTodo } : todo))
     );
+    setEdit(false);
   };
+  const inputRef = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, [edit]);
+
   return (
     <form
       className="single-todo-list"
@@ -53,11 +59,12 @@ export const SingleTodo: React.FC<Props> = ({ todo, todos, setTodos }) => {
       <span className="todos_single">
         {edit ? (
           <input
+            ref={inputRef}
             value={editTodo}
             onChange={(e) => {
               setEditTodo(e.target.value);
             }}
-            className="todos__single--test"
+            className="todo__single--text"
           />
         ) : todo.isDone ? (
           <s className="todo__single--text">{todo.todo}</s>

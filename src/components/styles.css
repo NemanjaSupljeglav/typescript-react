@@ -70,3 +70,6 @@
   font-size: 25px;
   cursor: pointer;
 }
+.todos__single--test:active {
+  background-color: yellow;
+}
